@@ -13,7 +13,7 @@ const Home = () => {
           <button className="btnContainer">Log in</button>
         </Link>
         <Link to='/signin'>
-          <button className="btnContainer">Sign in</button>
+          <button className="btnContainer">Signin</button>
         </Link>
       </div>
     </div>
