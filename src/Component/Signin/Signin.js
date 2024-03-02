@@ -26,15 +26,27 @@ const Signin = () => {
   const touchHandler =(event) => {
     setTouch({...touch , [event.target.name]: true})
   }
-  const signHandler = () => {
-
+  const signHandler = (event) => {
+    event.preventDefault()
+    if(!Object.keys(errors).length){
+      
+    }else{
+      setTouch({
+        username:true,
+        email:true,
+        number:true,
+        password:true,
+        confirmpassword:true,
+        isAccepted:true
+      })
+    }
   }
   return (
     <div className="mainContainer">
       <div className="titleContainer">
         <div>Login</div>
       </div>
-      <form className="bodyContainer">
+      <form onSubmit={signHandler} className="bodyContainer">
         <div className="inputContainer">
           <input
             type="text"
@@ -103,7 +115,7 @@ const Signin = () => {
             <button className="btn">Login</button>
           </Link>
           <Link to="/">
-            <button className="btn" onClick={() => signHandler()}>
+            <button className="btn">
               Sign in
             </button>
           </Link>
