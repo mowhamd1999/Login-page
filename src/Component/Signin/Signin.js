@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Signin.css";
 import validate from "../validate";
+
 const Signin = () => {
   const [data, setData] = useState({
     username: "",
@@ -9,38 +10,42 @@ const Signin = () => {
     number: "",
     password: "",
     confirmpassword: "",
-    isAccepted: false
+    isAccepted: false,
+    id: Math.floor(Math.random() * 1000),
   });
-  const [errors , setErrors] = useState({})
-  const [touch , setTouch] = useState({})
-  useEffect( () => {
-    setErrors(validate(data))
-  },[data , touch])
-  const changeHandler =(event) =>{
-    if(event.target.name === "isAccepted"){
-      setData({...data , [event.target.name]:event.target.checked})
-    }else{
-      setData({...data , [event.target.name] : event.target.value})
+  const [errors, setErrors] = useState({});
+  const [touch, setTouch] = useState({});
+  useEffect(() => {
+    setErrors(validate(data));
+  }, [data, touch]);
+  const changeHandler = (event) => {
+    if (event.target.name === "isAccepted") {
+      setData({ ...data, [event.target.name]: event.target.checked });
+    } else {
+      setData({ ...data, [event.target.name]: event.target.value });
     }
-  }
-  const touchHandler =(event) => {
-    setTouch({...touch , [event.target.name]: true})
-  }
+  };
+  const touchHandler = (event) => {
+    setTouch({ ...touch, [event.target.name]: true });
+  };
   const signHandler = (event) => {
-    event.preventDefault()
-    if(!Object.keys(errors).length){
-      
-    }else{
+    event.preventDefault();
+    if (!Object.keys(errors).length) {
+      fetch("https://login-page-4d286-default-rtdb.firebaseio.com/Users.json", {
+        method: "POST",
+        body: JSON.stringify(data),
+      }).then((response) => console.log(response));
+    } else {
       setTouch({
-        username:true,
-        email:true,
-        number:true,
-        password:true,
-        confirmpassword:true,
-        isAccepted:true
-      })
+        username: true,
+        email: true,
+        number: true,
+        password: true,
+        confirmpassword: true,
+        isAccepted: true,
+      });
     }
-  }
+  };
   return (
     <div className="mainContainer">
       <div className="titleContainer">
@@ -92,33 +97,39 @@ const Signin = () => {
           <br />
           {errors.password && touch.password && <span>{errors.password}</span>}
           <br />
-          <input 
-          type="password" 
-          placeholder="Confirm your password"
-          name="confirmpassword"
-          value={data.confirmpassword}
-          onChange={changeHandler}
-          onFocus={touchHandler}
+          <input
+            type="password"
+            placeholder="Confirm your password"
+            name="confirmpassword"
+            value={data.confirmpassword}
+            onChange={changeHandler}
+            onFocus={touchHandler}
           />
           <br />
-          {errors.confirmpassword && touch.confirmpassword && <span>{errors.confirmpassword}</span>}
+          {errors.confirmpassword && touch.confirmpassword && (
+            <span>{errors.confirmpassword}</span>
+          )}
           <br />
           <div className="checkbox">
             <label className="label">I accept terms of privacy policy</label>
-            <input type="checkbox" name="isAccepted" value={data.isAccepted} onChange={changeHandler}
-            onFocus={touchHandler} /><br />
-          {errors.isAccepted && touch.isAccepted && <span>{errors.isAccepted}</span>}
+            <input
+              type="checkbox"
+              name="isAccepted"
+              value={data.isAccepted}
+              onChange={changeHandler}
+              onFocus={touchHandler}
+            />
+            <br />
+            {errors.isAccepted && touch.isAccepted && (
+              <span>{errors.isAccepted}</span>
+            )}
           </div>
         </div>
         <div>
           <Link to="/signin">
             <button className="btn">Login</button>
           </Link>
-          <Link to="/">
-            <button className="btn">
-              Sign in
-            </button>
-          </Link>
+          <button className="btn" >Sign in</button>
         </div>
       </form>
     </div>
