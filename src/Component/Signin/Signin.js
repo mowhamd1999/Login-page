@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Signin.css";
+import validate from "../validate";
 const Signin = () => {
   const [data, setData] = useState({
     username: "",
@@ -10,13 +11,20 @@ const Signin = () => {
     confirmpassword: "",
     isAccepted: false
   });
+  const [errors , setErrors] = useState({})
+  const [touch , setTouch] = useState({})
+  useEffect( () => {
+    setErrors(validate(data))
+  },[data , touch])
   const changeHandler =(event) =>{
     if(event.target.name === "isAccepted"){
       setData({...data , [event.target.name]:event.target.checked})
     }else{
       setData({...data , [event.target.name] : event.target.value})
     }
-    console.log(data)
+  }
+  const touchHandler =(event) => {
+    setTouch({...touch , [event.target.name]: true})
   }
   const signHandler = () => {
 
@@ -34,7 +42,10 @@ const Signin = () => {
             name="username"
             value={data.username}
             onChange={changeHandler}
+            onFocus={touchHandler}
           />
+          <br />
+          {errors.username && touch.name && <span>{errors.username}</span>}
           <br />
           <input
             type="email"
@@ -42,7 +53,10 @@ const Signin = () => {
             name="email"
             value={data.email}
             onChange={changeHandler}
+            onFocus={touchHandler}
           />
+          <br />
+          {errors.email && touch.email && <span>{errors.email}</span>}
           <br />
           <input
             type="number"
@@ -50,7 +64,10 @@ const Signin = () => {
             name="number"
             value={data.number}
             onChange={changeHandler}
+            onFocus={touchHandler}
           />
+          <br />
+          {errors.number && touch.number && <span>{errors.number}</span>}
           <br />
           <input
             type="password"
@@ -58,7 +75,10 @@ const Signin = () => {
             name="password"
             value={data.password}
             onChange={changeHandler}
+            onFocus={touchHandler}
           />
+          <br />
+          {errors.password && touch.password && <span>{errors.password}</span>}
           <br />
           <input 
           type="password" 
@@ -66,11 +86,16 @@ const Signin = () => {
           name="confirmpassword"
           value={data.confirmpassword}
           onChange={changeHandler}
+          onFocus={touchHandler}
           />
+          <br />
+          {errors.confirmpassword && touch.confirmpassword && <span>{errors.confirmpassword}</span>}
           <br />
           <div className="checkbox">
             <label className="label">I accept terms of privacy policy</label>
-            <input type="checkbox" name="isAccepted" value={data.isAccepted} onChange={changeHandler} />
+            <input type="checkbox" name="isAccepted" value={data.isAccepted} onChange={changeHandler}
+            onFocus={touchHandler} /><br />
+          {errors.isAccepted && touch.isAccepted && <span>{errors.isAccepted}</span>}
           </div>
         </div>
         <div>
