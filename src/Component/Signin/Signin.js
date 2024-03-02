@@ -16,7 +16,7 @@ const Signin = () => {
   const [errors, setErrors] = useState({});
   const [touch, setTouch] = useState({});
   useEffect(() => {
-    setErrors(validate(data));
+    setErrors(validate(data , 'signin'));
   }, [data, touch]);
   const changeHandler = (event) => {
     if (event.target.name === "isAccepted") {
@@ -126,7 +126,7 @@ const Signin = () => {
           </div>
         </div>
         <div>
-          <Link to="/signin">
+          <Link to="/login">
             <button className="btn">Login</button>
           </Link>
           <button className="btn" >Sign in</button>
