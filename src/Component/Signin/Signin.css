@@ -1,0 +1,10 @@
+.checkbox{
+    text-align: center;
+    margin: 10px 0px 20px 0px;
+    align-content: center;
+}
+.label{
+    font-size: 0.9rem;
+    margin-left: 50px;
+    color: rgb(88, 88, 88);
+}

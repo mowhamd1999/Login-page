@@ -1,67 +1,77 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Signin.css";
-const Signin = (props) => {
-  const [users, setUsers] = useState([]);
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [number, setNumber] = useState("");
-  const [password, setPassword] = useState("");
-  const usernameHandler = (e) => {
-    setUsername(e.target.value);
-  };
-  const emailHandler = (e) => {
-    setEmail(e.target.value);
-  };
-  const numberHandler = (e) => {
-    setNumber(e.target.value);
-  };
-  const passwordHandler = (e) => {
-    setPassword(e.target.value);
-  };
+const Signin = () => {
+  const [data, setData] = useState({
+    username: "",
+    email: "",
+    number: "",
+    password: "",
+    confirmpassword: "",
+    isAccepted: false
+  });
+  const changeHandler =(event) =>{
+    if(event.target.name === "isAccepted"){
+      setData({...data , [event.target.name]:event.target.checked})
+    }else{
+      setData({...data , [event.target.name] : event.target.value})
+    }
+    console.log(data)
+  }
   const signHandler = () => {
-    let user = {
-      username,
-      email,
-      number,
-      password,
-      id: Math.floor(Math.random() * 1000),
-    };
-    setUsers(user);
-    console.log(users);
-  };
+
+  }
   return (
     <div className="mainContainer">
       <div className="titleContainer">
         <div>Login</div>
       </div>
-      <div className="bodyContainer">
+      <form className="bodyContainer">
         <div className="inputContainer">
           <input
             type="text"
             placeholder="Enter your username here"
-            onChange={(e) => usernameHandler(e)}
+            name="username"
+            value={data.username}
+            onChange={changeHandler}
           />
           <br />
           <input
             type="email"
             placeholder="Enter your email here"
-            onChange={(e) => emailHandler(e)}
+            name="email"
+            value={data.email}
+            onChange={changeHandler}
           />
           <br />
           <input
             type="number"
             placeholder="Enter your number here"
-            onChange={(e) => numberHandler(e)}
+            name="number"
+            value={data.number}
+            onChange={changeHandler}
           />
           <br />
           <input
             type="password"
             placeholder="Enter your password here"
-            onChange={(e) => passwordHandler(e)}
+            name="password"
+            value={data.password}
+            onChange={changeHandler}
           />
           <br />
-          <input type="password" placeholder="Confirm your password" />
+          <input 
+          type="password" 
+          placeholder="Confirm your password"
+          name="confirmpassword"
+          value={data.confirmpassword}
+          onChange={changeHandler}
+          />
+          <br />
+          <div className="checkbox">
+            <label className="label">I accept terms of privacy policy</label>
+            <input type="checkbox" name="isAccepted" value={data.isAccepted} onChange={changeHandler} />
+          </div>
         </div>
         <div>
           <Link to="/signin">
@@ -73,9 +83,9 @@ const Signin = (props) => {
             </button>
           </Link>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
 
-export default Signin
+export default Signin;
